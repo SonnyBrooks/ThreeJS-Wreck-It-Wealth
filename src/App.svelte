@@ -5,12 +5,13 @@
 	  PerspectiveCamera,
 	  DirectionalLight,
 	  AmbientLight,
+	  PCFSoftShadowMap,
 	  BoxBufferGeometry,
 	  Mesh,
 	  MeshStandardMaterial,
 	  WebGLRenderer,
+	  OrbitControls,
 	} from "svelthree";
-	// } from "svelthree";
   
 	import { sv3Ani } from "./animations.js";
 	import { selectedGeom, sliderValue, startWithRandomRot } from "./stores.js";
@@ -19,6 +20,14 @@
 	import GeomSelector from "./GeomSelector.svelte";
   
 	let cubeMaterial = new MeshStandardMaterial();
+
+	$: {
+		$sliderValue, changeCube();
+	}
+	let cubeGeometry;
+	function changeCube() {
+		cubeGeometry = new BoxBufferGeometry(1, $sliderValue, 1);
+	}
   
 	// Reactive animation function generation
 	let animateWithGSAPandRAF;
@@ -40,7 +49,6 @@
   </div>
   
   <Canvas let:sti w={500} h={500} interactive>
-  
 	<Scene {sti} let:scene id="scene1" props={{ background: 0xedf2f7 }}>
   
 	  <PerspectiveCamera {scene} id="cam1" pos={[0, 0, 3]} lookAt={[0, 0, 0]} />
@@ -50,16 +58,16 @@
 	  {#each Array($sliderValue) as _, i}
 		<Mesh
 		  {scene}
-		  geometry={$selectedGeom.geom}
+		  geometry={cubeGeometry}
 		  material={cubeMaterial}
 		  mat={{ roughness: 0.5, metalness: 0.5, color: 0xff3e00 }}
 		  pos={[0, 0, 0]}
 		  rot={[0.5, 0.6, 0]}
 		  scale={[0.6, 0.6, 0.6]}
-		  animation={animateWithGSAPandRAF}
 		  aniauto />
 	  {/each}
   
+	  <OrbitControls {scene} enableDamping />
 	</Scene>
   
 	<WebGLRenderer

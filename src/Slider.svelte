@@ -53,16 +53,7 @@
         class="input-row-start"
         bind:value={sliderMin}
         on:change={resetScene} />
-  
-      <div style="width: 14rem;">
-        <input
-          type="checkbox"
-          id="start_rot_check"
-          name="start_rot"
-          bind:checked={$startWithRandomRot}
-          on:change={resetScene} />
-        Start with random rotation
-      </div>
+
   
       <input
         type="number"
