@@ -3,7 +3,7 @@
   
     let slider;
     let sliderMin = 1;
-    let sliderMax = 100;
+    let sliderMax = 10;
   
     $sliderValue = sliderMin;
   

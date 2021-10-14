@@ -47,7 +47,7 @@ export function sv3Ani(startWithRandomRot) {
           ease: "sine.inOut",
         });
 
-      startJumping();
+      // startJumping();
       startRotating();
     }
 
@@ -78,7 +78,7 @@ export function sv3Ani(startWithRandomRot) {
      */
 
     function startRotating() {
-      ani.doRotate = true;
+      ani.doRotate = false;
       rotate();
     }
 
