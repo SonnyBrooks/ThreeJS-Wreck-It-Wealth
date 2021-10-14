@@ -13,8 +13,10 @@
 		PlaneBufferGeometry,
 		OrbitControls,
 		DoubleSide,
-    MathUtils,
-TextureLoader,
+		MathUtils,
+		TextureLoader,
+		SphereGeometry,
+		CubeGeometry,
 	} from "svelthree";
 	// } from "svelthree";
   
@@ -28,8 +30,9 @@ TextureLoader,
   	map: loader.load('iroh.png')
 		});
 	let cubeMaterial = new MeshBasicMaterial( material );
-
+	let cubeGeometry = new CubeGeometry();
 	let floorGeometry = new PlaneBufferGeometry(4, 4, 1);
+	let sphereGeometry = new SphereGeometry();
   let floorMaterial = new MeshStandardMaterial();
   
 	// Reactive animation function generation
@@ -51,7 +54,7 @@ TextureLoader,
 	<GeomSelector />
   </div>
   
-  <Canvas let:sti w={500} h={500} interactive>
+  <Canvas let:sti w={1450} h={600} interactive>
   
 	<Scene {sti} let:scene id="scene1" props={{ background: 0xedf2f7 }}>
   
@@ -70,6 +73,26 @@ TextureLoader,
 		  scale={[0.6, 0.6, 0.6]}
 		  aniauto />
 	  {/each}
+
+    <Mesh
+      {scene}
+      geometry={cubeGeometry}
+      material={cubeMaterial}
+      mat={{ roughness: 0.5, metalness: 0.5 }}
+      pos={[0, 0, 2]}
+      rot={[MathUtils.degToRad(-90), 0, 0]}
+      scale={[1, 1, 1]}
+      receiveShadow />
+
+    <Mesh
+      {scene}
+      geometry={sphereGeometry}
+      material={cubeMaterial}
+      mat={{ roughness: 0.5, metalness: 0.5 }}
+      pos={[0, 2, 0]}
+      rot={[MathUtils.degToRad(-90), 0, 0]}
+      scale={[1, 1, 1]}
+      receiveShadow />
 
     <Mesh
       {scene}
