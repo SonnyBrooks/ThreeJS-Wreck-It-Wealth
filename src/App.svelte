@@ -28,7 +28,7 @@ MeshPhongMaterial,
 	import GeomSelector from "./GeomSelector.svelte";
 
 	export let color = '#ff3e00';
-	let income = 3;
+	let income = 5;
 
 	let w = 1;
 	let h = 1;
@@ -62,12 +62,12 @@ MeshPhongMaterial,
 	let incomeMaterial = new MeshStandardMaterial( income_material );
 
 	let entertainment_material = new MeshBasicMaterial({
-  	map: loader.load('taco.jpeg')
+  	map: loader.load('entertainment.png')
 		});
 	let entertainmentMaterial = new MeshBasicMaterial( entertainment_material );
 
 	let savings_material = new MeshBasicMaterial({
-  	map: loader.load('coin.png')
+  	map: loader.load('savings.png')
 		});
 	let savingsMaterial = new MeshBasicMaterial( savings_material );
 
@@ -146,7 +146,7 @@ MeshPhongMaterial,
     <Mesh
       {scene}
       geometry={cubeGeometry}
-      material={cubeMaterial}
+      material={savingsMaterial}
       mat={{ roughness: 0.5, metalness: 0.5 }}
       pos={[2, 0, -2]}
       rot={[MathUtils.degToRad(-90), 0, 0]}
@@ -161,7 +161,7 @@ MeshPhongMaterial,
       geometry={sphereGeometry}
       material={incomeMaterial}
       mat={{ metalness: 0.5, roughness: 0.1, diffuse: 0.1, color: 0xE5BA1B }}
-      pos={[-12, 2, 0]}
+      pos={[-18, 2, 0]}
       rot={[MathUtils.degToRad(-90), 0, 0]}
       scale={[income_change-( Math.abs(house_d) + Math.abs(food_d) ) , income_change-( Math.abs(house_d) + Math.abs(food_d) ) , income_change-( Math.abs(house_d) + Math.abs(food_d) ) ]}
       receiveShadow />
