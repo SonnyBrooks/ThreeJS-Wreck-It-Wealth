@@ -41,6 +41,8 @@
 	let food_h = 1;
 	let food_d = 1;
 
+	let income_change = income;
+
   let loader = new TextureLoader();
 	let material = new MeshBasicMaterial({
   	map: loader.load('pngtree-vector-house.jpeg')
@@ -52,6 +54,10 @@
 		});
 	let foodMaterial = new MeshBasicMaterial( food_material );
 
+	let income_material = new MeshBasicMaterial({
+  	map: loader.load('coin.png')
+		});
+	let incomeMaterial = new MeshBasicMaterial( income_material );
 
 	let cubeGeometry = new CubeGeometry();
 	let floorGeometry = new PlaneBufferGeometry(10, 10, 1);
@@ -111,15 +117,15 @@
 			scale={[w,h,food_d]}
       receiveShadow />
 
-			<!-- sphere -->
+			<!-- Income sphere -->
     <Mesh
       {scene}
       geometry={sphereGeometry}
-      material={cubeMaterial}
-      mat={{ roughness: 0.5, metalness: 0.5, color: 0x00FF00 }}
+      material={incomeMaterial}
+      mat={{ roughness: 0.5, metalness: 0.5, color: 0xE1E40B }}
       pos={[-12, 2, 0]}
       rot={[MathUtils.degToRad(-90), 0, 0]}
-      scale={[1, 1, 1]}
+      scale={[1, 1, income_change-( Math.abs(house_d) + Math.abs(food_d) ) ]}
       receiveShadow />
 
 			<!-- floor -->
@@ -151,6 +157,10 @@
 		</label> -->
 	
 		<label>
+			<input type="range" bind:value={income_change} min={0.1} max={5} step={0.1}> Treasure ({income_change})
+		</label>
+
+		<label>
 			<input type="range" bind:value={food_d} min={0.1} max={5} step={0.1}> Food Expenses ({food_d})
 		</label>
 
@@ -158,7 +168,7 @@
 			<input type="range" bind:value={house_d} min={0.1} max={5} step={0.1}> Home Expenses ({house_d})
 		</label>
 
-		<label>
+		<!-- <label>
 			<input type="range" bind:value={w} min={0.1} max={5} step={0.1}> width ({w})
 		</label>
 	
@@ -168,7 +178,7 @@
 	
 		<label>
 			<input type="range" bind:value={d} min={0.1} max={5} step={0.1}> depth ({d})
-		</label>
+		</label> -->
 	</div>
 	
 
