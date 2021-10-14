@@ -42,6 +42,9 @@ MeshPhongMaterial,
 	let food_h = 1;
 	let food_d = 1;
 
+	let entertainment_d = 1;
+	let savings_d = 1;
+
 	let income_change = income;
 
   let loader = new TextureLoader();
@@ -57,6 +60,16 @@ MeshPhongMaterial,
 
 	let income_material = new MeshStandardMaterial();
 	let incomeMaterial = new MeshStandardMaterial( income_material );
+
+	let entertainment_material = new MeshBasicMaterial({
+  	map: loader.load('taco.jpeg')
+		});
+	let entertainmentMaterial = new MeshBasicMaterial( entertainment_material );
+
+	let savings_material = new MeshBasicMaterial({
+  	map: loader.load('coin.png')
+		});
+	let savingsMaterial = new MeshBasicMaterial( savings_material );
 
 	let cubeGeometry = new CubeGeometry();
 	let floorGeometry = new PlaneBufferGeometry(10, 10, 1);
@@ -84,7 +97,7 @@ MeshPhongMaterial,
   
   <Canvas let:sti w={1450} h={600} interactive>
 
-	<Scene {sti} let:scene id="scene1" props={{ background: 0xedf2f7 }}>
+	<Scene {sti} let:scene id="scene1" props={{ background: 0x0098DB }}>
   
 	  <PerspectiveCamera {scene} id="cam1" pos={[3, 3, 3]} lookAt={[-12, 2, 0]} />
 	  <AmbientLight {scene} intensity={1.25} />
@@ -96,7 +109,7 @@ MeshPhongMaterial,
       geometry={cubeGeometry}
       material={cubeMaterial}
       mat={{ roughness: 0.5, metalness: 0.5 }}
-      pos={[0, 0, -2]}
+      pos={[-2, 0, -2]}
       rot={[MathUtils.degToRad(-90), 0, 0]}
 			location={[0,h/2,0]}
 			rotation={[0,-20,0]}
@@ -109,11 +122,37 @@ MeshPhongMaterial,
       geometry={cubeGeometry}
       material={foodMaterial}
       mat={{ roughness: 0.5, metalness: 0.5 }}
-      pos={[0, 0, 2]}
+      pos={[-2, 0, 2]}
       rot={[MathUtils.degToRad(-90), 0, 0]}
 			location={[0,h/2,0]}
 			rotation={[0,-20,0]}
 			scale={[w,h,food_d]}
+      receiveShadow />
+
+			<!-- Entertainment -->
+			<Mesh
+			{scene}
+			geometry={cubeGeometry}
+			material={entertainmentMaterial}
+			mat={{ roughness: 0.5, metalness: 0.5 }}
+			pos={[2, 0, 2]}
+			rot={[MathUtils.degToRad(-90), 0, 0]}
+			location={[0,h/2,0]}
+			rotation={[0,-20,0]}
+			scale={[w,h,entertainment_d]}
+			receiveShadow />
+
+		<!-- savings -->
+    <Mesh
+      {scene}
+      geometry={cubeGeometry}
+      material={cubeMaterial}
+      mat={{ roughness: 0.5, metalness: 0.5 }}
+      pos={[2, 0, -2]}
+      rot={[MathUtils.degToRad(-90), 0, 0]}
+			location={[0,h/2,0]}
+			rotation={[0,-20,0]}
+			scale={[w,h,savings_d]}
       receiveShadow />
 
 			<!-- Income sphere -->
@@ -132,7 +171,7 @@ MeshPhongMaterial,
       {scene}
       geometry={floorGeometry}
       material={floorMaterial}
-      mat={{ roughness: 0.5, metalness: 0.2, side: DoubleSide, color: 0x242426 }}
+      mat={{ roughness: 0.5, metalness: 0.2, side: DoubleSide, color: 0x2A2A2A }}
       pos={[0, -0.501, 0]}
       rot={[MathUtils.degToRad(-90), 0, 0]}
       scale={[1, 1, 1]}
@@ -159,11 +198,19 @@ MeshPhongMaterial,
 		</label>
 
 		<label>
-			<input type="range" bind:value={food_d} min={0.1} max={5} step={0.1}> Food Expenses ({food_d})
+			<input type="range" bind:value={food_d} min={0.1} max={5} step={0.1}> <input type="number" bind:value={food_d} inputmode="numeric"> Food Expenses
 		</label>
 
 		<label>
-			<input type="range" bind:value={house_d} min={0.1} max={5} step={0.1}> Home Expenses ({house_d})
+			<input type="range" bind:value={house_d} min={0.1} max={5} step={0.1}> <input type="number" bind:value={house_d} inputmode="numeric"> Home Expenses 
+		</label>
+
+		<label>
+			<input type="range" bind:value={entertainment_d} min={0.1} max={5} step={0.1}> <input type="number" bind:value={entertainment_d} inputmode="numeric"> Entertainment Expenses
+		</label>
+
+		<label>
+			<input type="range" bind:value={savings_d} min={0.1} max={5} step={0.1}> <input type="number" bind:value={savings_d} inputmode="numeric"> Savings 
 		</label>
 
 		<!-- <label>
