@@ -27,7 +27,7 @@
 	import GeomSelector from "./GeomSelector.svelte";
   let loader = new TextureLoader();
 	let material = new MeshBasicMaterial({
-  	map: loader.load('iroh.png')
+  	map: loader.load('pngtree-vector-house.jpeg')
 		});
 	let cubeMaterial = new MeshBasicMaterial( material );
 	let cubeGeometry = new CubeGeometry();
