@@ -5,6 +5,7 @@
 	  PerspectiveCamera,
 	  DirectionalLight,
 	  AmbientLight,
+	  PCFSoftShadowMap,
 	  BoxBufferGeometry,
 	  Mesh,
 	  MeshStandardMaterial,
@@ -18,7 +19,6 @@
 		SphereGeometry,
 		CubeGeometry,
 	} from "svelthree";
-	// } from "svelthree";
   
 	import { sv3Ani } from "./animations.js";
 	import { selectedGeom, sliderValue, startWithRandomRot } from "./stores.js";
@@ -84,7 +84,7 @@
   </div>
   
   <Canvas let:sti w={1450} h={600} interactive>
-  
+
 	<Scene {sti} let:scene id="scene1" props={{ background: 0xedf2f7 }}>
   
 	  <PerspectiveCamera {scene} id="cam1" pos={[0, 0, 3]} lookAt={[0, 0, 0]} />
