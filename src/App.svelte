@@ -18,6 +18,7 @@
 		TextureLoader,
 		SphereGeometry,
 		CubeGeometry,
+MeshPhongMaterial,
 	} from "svelthree";
   
 	import { sv3Ani } from "./animations.js";
@@ -26,8 +27,8 @@
 	import Slider from "./Slider.svelte";
 	import GeomSelector from "./GeomSelector.svelte";
 
-	// export let color = '#ff3e00';
-	let income = 5;
+	export let color = '#ff3e00';
+	let income = 3;
 
 	let w = 1;
 	let h = 1;
@@ -57,10 +58,8 @@
 		});
 	let foodMaterial = new MeshBasicMaterial( food_material );
 
-	let income_material = new MeshBasicMaterial({
-  	map: loader.load('coin.png')
-		});
-	let incomeMaterial = new MeshBasicMaterial( income_material );
+	let income_material = new MeshStandardMaterial();
+	let incomeMaterial = new MeshStandardMaterial( income_material );
 
 	let entertainment_material = new MeshBasicMaterial({
   	map: loader.load('taco.jpeg')
@@ -74,7 +73,7 @@
 
 	let cubeGeometry = new CubeGeometry();
 	let floorGeometry = new PlaneBufferGeometry(10, 10, 1);
-	let sphereGeometry = new SphereGeometry( income );
+	let sphereGeometry = new SphereGeometry( income, 32, 32 );
   let floorMaterial = new MeshStandardMaterial();
   
 	// Reactive animation function generation
@@ -98,9 +97,9 @@
   
   <Canvas let:sti w={1450} h={600} interactive>
 
-	<Scene {sti} let:scene id="scene1" props={{ background: 0xedf2f7 }}>
+	<Scene {sti} let:scene id="scene1" props={{ background: 0x0098DB }}>
   
-	  <PerspectiveCamera {scene} id="cam1" pos={[0, 0, 3]} lookAt={[0, 0, 0]} />
+	  <PerspectiveCamera {scene} id="cam1" pos={[3, 3, 3]} lookAt={[-12, 2, 0]} />
 	  <AmbientLight {scene} intensity={1.25} />
 	  <DirectionalLight {scene} pos={[3, 3, 3]} />
   
@@ -161,10 +160,10 @@
       {scene}
       geometry={sphereGeometry}
       material={incomeMaterial}
-      mat={{ roughness: 0.5, metalness: 0.5, color: 0xE1E40B }}
+      mat={{ metalness: 0.5, roughness: 0.1, diffuse: 0.1, color: 0xE5BA1B }}
       pos={[-12, 2, 0]}
       rot={[MathUtils.degToRad(-90), 0, 0]}
-      scale={[1, 1, income_change-( Math.abs(house_d) + Math.abs(food_d) + Math.abs(entertainment_d) + Math.abs(savings_d)) ]}
+      scale={[income_change-( Math.abs(house_d) + Math.abs(food_d) ) , income_change-( Math.abs(house_d) + Math.abs(food_d) ) , income_change-( Math.abs(house_d) + Math.abs(food_d) ) ]}
       receiveShadow />
 
 			<!-- floor -->
@@ -172,7 +171,7 @@
       {scene}
       geometry={floorGeometry}
       material={floorMaterial}
-      mat={{ roughness: 0.5, metalness: 0.2, side: DoubleSide, color: 0x5B372F }}
+      mat={{ roughness: 0.5, metalness: 0.2, side: DoubleSide, color: 0x2A2A2A }}
       pos={[0, -0.501, 0]}
       rot={[MathUtils.degToRad(-90), 0, 0]}
       scale={[1, 1, 1]}
@@ -194,8 +193,7 @@
 		<!-- <label>
 			<input type="color" style="height: 40px" bind:value={color}>
 		</label> -->
-	
-		<label>
+			<label>
 			<input type="range" bind:value={income_change} min={0.1} max={5} step={0.1}> Treasure ({income_change})
 		</label>
 
