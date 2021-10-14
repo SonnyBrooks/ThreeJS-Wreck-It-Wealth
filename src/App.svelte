@@ -25,6 +25,12 @@
   
 	import Slider from "./Slider.svelte";
 	import GeomSelector from "./GeomSelector.svelte";
+
+	export let color = '#ff3e00';
+	let w = 1;
+	let h = 1;
+	let d = 1;
+
   let loader = new TextureLoader();
 	let material = new MeshBasicMaterial({
   	map: loader.load('pngtree-vector-house.jpeg')
@@ -62,17 +68,17 @@
 	  <AmbientLight {scene} intensity={1.25} />
 	  <DirectionalLight {scene} pos={[3, 3, 3]} />
   
-	  {#each Array($sliderValue) as _, i}
-		<Mesh
-		  {scene}
-		  geometry={$selectedGeom.geom}
-		  material={cubeMaterial}
-		  mat={{ roughness: 0.5, metalness: 0.5, color: 0xff3e00 }}
-		  pos={[0, 0, 0]}
-		  rot={[0.5, 0.6, 0]}
-		  scale={[0.6, 0.6, 0.6]}
-		  aniauto />
-	  {/each}
+    <Mesh
+      {scene}
+      geometry={cubeGeometry}
+      material={cubeMaterial}
+      mat={{ roughness: 0.5, metalness: 0.5 }}
+      pos={[0, 0, -2]}
+      rot={[MathUtils.degToRad(-90), 0, 0]}
+			location={[0,h/2,0]}
+			rotation={[0,-20,0]}
+			scale={[w,h,d]}
+      receiveShadow />
 
     <Mesh
       {scene}
@@ -81,7 +87,9 @@
       mat={{ roughness: 0.5, metalness: 0.5 }}
       pos={[0, 0, 2]}
       rot={[MathUtils.degToRad(-90), 0, 0]}
-      scale={[1, 1, 1]}
+			location={[0,h/2,0]}
+			rotation={[0,-20,0]}
+			scale={[w,h,d]}
       receiveShadow />
 
     <Mesh
@@ -114,9 +122,26 @@
 	  config={{ antialias: true, alpha: false }} />
   
   </Canvas>
+
   
-  <Slider />
-  
+	<div class="controls">
+		<label>
+			<input type="color" style="height: 40px" bind:value={color}>
+		</label>
+	
+		<label>
+			<input type="range" bind:value={w} min={0.1} max={5} step={0.1}> width ({w})
+		</label>
+	
+		<label>
+			<input type="range" bind:value={h} min={0.1} max={5} step={0.1}> height ({h})
+		</label>
+	
+		<label>
+			<input type="range" bind:value={d} min={0.1} max={5} step={0.1}> depth ({d})
+		</label>
+	</div>
+	
 
 
 	
