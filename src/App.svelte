@@ -8,7 +8,13 @@
 	  BoxBufferGeometry,
 	  Mesh,
 	  MeshStandardMaterial,
+		MeshBasicMaterial,
 	  WebGLRenderer,
+		PlaneBufferGeometry,
+		OrbitControls,
+		DoubleSide,
+    MathUtils,
+TextureLoader,
 	} from "svelthree";
 	// } from "svelthree";
   
@@ -17,8 +23,14 @@
   
 	import Slider from "./Slider.svelte";
 	import GeomSelector from "./GeomSelector.svelte";
-  
-	let cubeMaterial = new MeshStandardMaterial();
+  let loader = new TextureLoader();
+	let material = new MeshBasicMaterial({
+  	map: loader.load('iroh.png')
+		});
+	let cubeMaterial = new MeshBasicMaterial( material );
+
+	let floorGeometry = new PlaneBufferGeometry(4, 4, 1);
+  let floorMaterial = new MeshStandardMaterial();
   
 	// Reactive animation function generation
 	let animateWithGSAPandRAF;
@@ -56,10 +68,20 @@
 		  pos={[0, 0, 0]}
 		  rot={[0.5, 0.6, 0]}
 		  scale={[0.6, 0.6, 0.6]}
-		  animation={animateWithGSAPandRAF}
 		  aniauto />
 	  {/each}
-  
+
+    <Mesh
+      {scene}
+      geometry={floorGeometry}
+      material={floorMaterial}
+      mat={{ roughness: 0.5, metalness: 0.5, side: DoubleSide, color: 0xf7fafc }}
+      pos={[0, -0.501, 0]}
+      rot={[MathUtils.degToRad(-90), 0, 0]}
+      scale={[1, 1, 1]}
+      receiveShadow />
+
+		<OrbitControls {scene} enableDamping />
 	</Scene>
   
 	<WebGLRenderer
@@ -72,3 +94,6 @@
   
   <Slider />
   
+
+
+	
