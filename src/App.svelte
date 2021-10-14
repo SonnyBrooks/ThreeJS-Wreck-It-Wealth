@@ -26,7 +26,7 @@
 	import Slider from "./Slider.svelte";
 	import GeomSelector from "./GeomSelector.svelte";
 
-	export let color = '#ff3e00';
+	// export let color = '#ff3e00';
 	let income = 5;
 
 	let w = 1;
@@ -40,6 +40,9 @@
 	let food_w = 1;
 	let food_h = 1;
 	let food_d = 1;
+
+	let entertainment_d = 1;
+	let savings_d = 1;
 
 	let income_change = income;
 
@@ -58,6 +61,16 @@
   	map: loader.load('coin.png')
 		});
 	let incomeMaterial = new MeshBasicMaterial( income_material );
+
+	let entertainment_material = new MeshBasicMaterial({
+  	map: loader.load('taco.jpeg')
+		});
+	let entertainmentMaterial = new MeshBasicMaterial( entertainment_material );
+
+	let savings_material = new MeshBasicMaterial({
+  	map: loader.load('coin.png')
+		});
+	let savingsMaterial = new MeshBasicMaterial( savings_material );
 
 	let cubeGeometry = new CubeGeometry();
 	let floorGeometry = new PlaneBufferGeometry(10, 10, 1);
@@ -97,7 +110,7 @@
       geometry={cubeGeometry}
       material={cubeMaterial}
       mat={{ roughness: 0.5, metalness: 0.5 }}
-      pos={[0, 0, -2]}
+      pos={[-2, 0, -2]}
       rot={[MathUtils.degToRad(-90), 0, 0]}
 			location={[0,h/2,0]}
 			rotation={[0,-20,0]}
@@ -110,11 +123,37 @@
       geometry={cubeGeometry}
       material={foodMaterial}
       mat={{ roughness: 0.5, metalness: 0.5 }}
-      pos={[0, 0, 2]}
+      pos={[-2, 0, 2]}
       rot={[MathUtils.degToRad(-90), 0, 0]}
 			location={[0,h/2,0]}
 			rotation={[0,-20,0]}
 			scale={[w,h,food_d]}
+      receiveShadow />
+
+			<!-- Entertainment -->
+			<Mesh
+			{scene}
+			geometry={cubeGeometry}
+			material={entertainmentMaterial}
+			mat={{ roughness: 0.5, metalness: 0.5 }}
+			pos={[2, 0, 2]}
+			rot={[MathUtils.degToRad(-90), 0, 0]}
+			location={[0,h/2,0]}
+			rotation={[0,-20,0]}
+			scale={[w,h,entertainment_d]}
+			receiveShadow />
+
+		<!-- savings -->
+    <Mesh
+      {scene}
+      geometry={cubeGeometry}
+      material={cubeMaterial}
+      mat={{ roughness: 0.5, metalness: 0.5 }}
+      pos={[2, 0, -2]}
+      rot={[MathUtils.degToRad(-90), 0, 0]}
+			location={[0,h/2,0]}
+			rotation={[0,-20,0]}
+			scale={[w,h,savings_d]}
       receiveShadow />
 
 			<!-- Income sphere -->
@@ -125,7 +164,7 @@
       mat={{ roughness: 0.5, metalness: 0.5, color: 0xE1E40B }}
       pos={[-12, 2, 0]}
       rot={[MathUtils.degToRad(-90), 0, 0]}
-      scale={[1, 1, income_change-( Math.abs(house_d) + Math.abs(food_d) ) ]}
+      scale={[1, 1, income_change-( Math.abs(house_d) + Math.abs(food_d) + Math.abs(entertainment_d) + Math.abs(savings_d)) ]}
       receiveShadow />
 
 			<!-- floor -->
@@ -166,6 +205,14 @@
 
 		<label>
 			<input type="range" bind:value={house_d} min={0.1} max={5} step={0.1}> <input type="number" bind:value={house_d} inputmode="numeric"> Home Expenses 
+		</label>
+
+		<label>
+			<input type="range" bind:value={entertainment_d} min={0.1} max={5} step={0.1}> <input type="number" bind:value={entertainment_d} inputmode="numeric"> Entertainment Expenses
+		</label>
+
+		<label>
+			<input type="range" bind:value={savings_d} min={0.1} max={5} step={0.1}> <input type="number" bind:value={savings_d} inputmode="numeric"> Savings 
 		</label>
 
 		<!-- <label>
