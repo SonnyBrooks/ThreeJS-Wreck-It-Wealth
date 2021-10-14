@@ -161,11 +161,11 @@
 		</label>
 
 		<label>
-			<input type="range" bind:value={food_d} min={0.1} max={5} step={0.1}> Food Expenses ({food_d})
+			<input type="range" bind:value={food_d} min={0.1} max={5} step={0.1}> <input type="number" bind:value={food_d} inputmode="numeric"> Food Expenses
 		</label>
 
 		<label>
-			<input type="range" bind:value={house_d} min={0.1} max={5} step={0.1}> Home Expenses ({house_d})
+			<input type="range" bind:value={house_d} min={0.1} max={5} step={0.1}> <input type="number" bind:value={house_d} inputmode="numeric"> Home Expenses 
 		</label>
 
 		<!-- <label>
